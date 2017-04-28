@@ -30,18 +30,6 @@ public class RegularCard extends BaseCard{
 		
 	}
 
-	public CardNumber getCardNum() {
-		return cardNum;
-	}
-
-	public ExpirationDate getExpDate() {
-		return expDate;
-	}
-
-	public CvvCode getCvv() {
-		return cvv;
-	}
-
 	@Override
 	public void validate() {
 		
