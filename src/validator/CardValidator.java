@@ -40,9 +40,6 @@ public class CardValidator {
 
 		String[] credentials = cardInfo.split("~");
 		
-		// Show credentials:
-		System.out.println(Arrays.toString(credentials));
-		
 		if (credentials.length < MIN_CREDENTIALS) {
 			System.out.println("Not enough credentials");
 			return false;
