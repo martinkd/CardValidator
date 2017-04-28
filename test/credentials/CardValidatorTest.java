@@ -18,20 +18,19 @@ public class CardValidatorTest {
 	public void TerminalIDTest() {
 		
 		TerminalID termID = new TerminalID("00002859");
-		assertTrue("should pass the test", termID.isValid());
+		assertTrue("should pass valid terminal ID", termID.isValid());
 		
 		termID = new TerminalID("");
-		assertFalse("should not let 0 chars", termID.isValid());
+		assertFalse("should fail 0 chars", termID.isValid());
 		
 		termID = new TerminalID("a1");
-		assertTrue("should pass less than 8 chars", termID.isValid());
+		assertTrue("should pass less than 8 alphanumeric chars", termID.isValid());
+		
+		termID = new TerminalID("00as2859a");
+		assertFalse("should fail more than 8 alphanumeric chars", termID.isValid());
 		
 		termID = new TerminalID("1234sad/");
-		assertFalse("not alphanumeric chars", termID.isValid());
-		
-		termID = new TerminalID("00002859/");
-		assertFalse("more than 8 characters", termID.isValid());
-		
+		assertFalse("should fail not alphanumeric chars", termID.isValid());
 	}
 	
 	@Test
@@ -44,16 +43,16 @@ public class CardValidatorTest {
 		assertTrue("should pass 18 numbers", cardNum.isValid());
 		
 		cardNum = new CardNumber("01234567891");
-		assertFalse("should not pass less than 12 numbers", cardNum.isValid());
+		assertFalse("should fail less than 12 numbers", cardNum.isValid());
 		
 		cardNum = new CardNumber("0123456789123456789");
-		assertFalse("should not pass more than 18 numbers", cardNum.isValid());
+		assertFalse("should fail more than 18 numbers", cardNum.isValid());
 		
 		cardNum = new CardNumber("");
-		assertFalse("should not pass more than 0 numbers", cardNum.isValid());
+		assertFalse("should fail 0 numbers", cardNum.isValid());
 
 		cardNum = new CardNumber("asdfghjk123");
-		assertFalse("should not pass other chars", cardNum.isValid());
+		assertFalse("should fail other chars than digits", cardNum.isValid());
 	}
 	
 	@Test
@@ -62,7 +61,15 @@ public class CardValidatorTest {
 		ExpirationDate expDate = new ExpirationDate("0220");
 		assertTrue("should pass valid date", expDate.isValid());
 		
-		expDate = new ExpirationDate("0512");
+		// current date for this test is 28.04.2017
+		expDate = new ExpirationDate("0417");
+		assertTrue("should pass last month of the current year", expDate.isValid());
+		
+		// current date for this test is 28.04.2017
+		expDate = new ExpirationDate("0317");
+		assertFalse("should fail expired month of the current year", expDate.isValid());
+		
+		expDate = new ExpirationDate("0412");
 		assertFalse("should fail expired date", expDate.isValid());
 		
 		expDate = new ExpirationDate("220");
@@ -100,10 +107,13 @@ public class CardValidatorTest {
 		cvv = new CvvCode("12345");
 		assertFalse("should fail more than 4 digits", cvv.isValid());
 		
-		cvv = new CvvCode("12345");
-		assertFalse("should pass more than 4 digits", cvv.isValid());
+		cvv = new CvvCode("12");
+		assertFalse("should fail less than 3 digits", cvv.isValid());
 		
 		cvv = new CvvCode("asdf");
+		assertFalse("should fail other chars", cvv.isValid());
+		
+		cvv = new CvvCode("12df");
 		assertFalse("should fail other chars", cvv.isValid());
 	}
 	
@@ -129,11 +139,17 @@ public class CardValidatorTest {
 		PromotionCode promoCode = new PromotionCode("0123456789as");
 		assertTrue("should pass valid promo code", promoCode.isValid());
 		
+		promoCode = new PromotionCode("0123asd");
+		assertTrue("should pass with up to 12 alphanumeric chars", promoCode.isValid());
+		
 		promoCode = new PromotionCode("0123456789asd");
 		assertFalse("should fail more than 12 alphanumeric chars", promoCode.isValid());
 		
 		promoCode = new PromotionCode("asdf,.asd");
 		assertFalse("should fail other chars", promoCode.isValid());
+		
+		promoCode = new PromotionCode("");
+		assertFalse("should fail empty promo code", promoCode.isValid());
 	}
 	
 	@Test
@@ -153,6 +169,9 @@ public class CardValidatorTest {
 		
 		checkSum = new CheckSum("123alN");
 		assertFalse("should fail not hex digits", checkSum.isValid());
+		
+		checkSum = new CheckSum("");
+		assertFalse("should fail with empty checksum", checkSum.isValid());
 	}
 	
 }
