@@ -3,25 +3,24 @@ package credentials;
 import java.util.Calendar;
 import java.util.Date;
 
-public class ExpirationDate implements BaseCredential {
+public class ExpirationDate extends BaseCredential {
 
 	private static final int EXP_DATE_LENGTH = 4;
-	private String expDate;
 
-	public ExpirationDate(String expDate) {
-		this.expDate = expDate;
+	public ExpirationDate(String credential) {
+		super(credential);
 	}
 
 	@Override
 	public boolean isValid() {
 
-		if (expDate.length() != EXP_DATE_LENGTH) {
+		if (credential.length() != EXP_DATE_LENGTH) {
 			return false;
 		}
 
 		try {
 
-			int date = Integer.parseInt(expDate);
+			int date = Integer.parseInt(credential);
 
 			if (!isValidYear(date)) {
 				return false;

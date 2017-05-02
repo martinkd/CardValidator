@@ -3,19 +3,17 @@ package credentials;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class CheckSum implements BaseCredential{
+public class CheckSum extends BaseCredential {
 
-	private String checkSum;
-	
-	public CheckSum(String checkSum) {
-		this.checkSum = checkSum;
+	public CheckSum(String credential) {
+		super(credential);
 	}
-	
+
 	@Override
 	public boolean isValid() {
 		String patternStr = "^[0-9a-fA-F]{4,8}";
 		Pattern pattern = Pattern.compile(patternStr);
-		Matcher matcher = pattern.matcher(checkSum);
+		Matcher matcher = pattern.matcher(credential);
 		return matcher.matches();
 	}
 

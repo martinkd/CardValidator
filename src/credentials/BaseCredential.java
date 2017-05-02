@@ -1,7 +1,13 @@
 package credentials;
 
-public interface BaseCredential {
+public abstract class BaseCredential {
+
+	String credential;
 	
-	boolean isValid();
+	public BaseCredential(String credential) {
+		this.credential = credential;
+	}
+	
+	abstract boolean isValid();
 	
 }
