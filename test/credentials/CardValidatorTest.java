@@ -4,18 +4,10 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import credentials.Amount;
-import credentials.CardNumber;
-import credentials.CheckSum;
-import credentials.CvvCode;
-import credentials.ExpirationDate;
-import credentials.PromotionCode;
-import credentials.TerminalID;
-
 public class CardValidatorTest {
 
 	@Test
-	public void TerminalIDTest() {
+	public void terminalIDTest() {
 		
 		TerminalID termID = new TerminalID("00002859");
 		assertTrue("should pass valid terminal ID", termID.isValid());
@@ -34,7 +26,7 @@ public class CardValidatorTest {
 	}
 	
 	@Test
-	public void CardNumberTest() {
+	public void cardNumberTest() {
 		
 		CardNumber cardNum = new CardNumber("012345678912");
 		assertTrue("should pass 12 numbers", cardNum.isValid());
@@ -56,13 +48,13 @@ public class CardValidatorTest {
 	}
 	
 	@Test
-	public void ExpirationDateTest() {
+	public void expirationDateTest() {
 		
 		ExpirationDate expDate = new ExpirationDate("0220");
 		assertTrue("should pass valid date", expDate.isValid());
 		
-		// current date for this test is 28.04.2017
-		expDate = new ExpirationDate("0417");
+		// current date for this test is 05.02.2017
+		expDate = new ExpirationDate("0517");
 		assertTrue("should pass last month of the current year", expDate.isValid());
 		
 		// current date for this test is 28.04.2017
@@ -118,7 +110,7 @@ public class CardValidatorTest {
 	}
 	
 	@Test
-	public void AmountTest() {
+	public void amountTest() {
 		
 		Amount amount = new Amount("123.58");
 		assertTrue("should pass valid amount", amount.isValid());
@@ -134,7 +126,7 @@ public class CardValidatorTest {
 	}
 	
 	@Test
-	public void PromotionCodeTest() {
+	public void promotionCodeTest() {
 		
 		PromotionCode promoCode = new PromotionCode("0123456789as");
 		assertTrue("should pass valid promo code", promoCode.isValid());
@@ -153,7 +145,7 @@ public class CardValidatorTest {
 	}
 	
 	@Test
-	public void CheckSumTest() {
+	public void checkSumTest() {
 		
 		CheckSum checkSum = new CheckSum("123a");
 		assertTrue("should pass valid checksum", checkSum.isValid());
